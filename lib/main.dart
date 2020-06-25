@@ -32,13 +32,28 @@ class _SoundsPageState extends State<SoundsPage> {
   _SoundsPageState() {
     noises = List<NoiseModel>();
     noises.add(
-      NoiseModel(Colors.blue, 'assets/audios/cave_river.mp3'),
+      NoiseModel("birds", 'assets/images/albatross-100.png', Colors.blue,
+          'assets/audios/noiser_birds.mp3'),
     );
     noises.add(
-      NoiseModel(Colors.red, 'assets/audios/river.wav'),
+      NoiseModel("bonfire", 'assets/images/bonfire-100-2.png', Colors.blue,
+          'assets/audios/noiser_campfire.mp3'),
     );
     noises.add(
-      NoiseModel(Colors.green, 'assets/audios/stream.wav'),
+      NoiseModel("rain", 'assets/images/rain-100.png', Colors.blue,
+          'assets/audios/noiser_rain.mp3'),
+    );
+    noises.add(
+      NoiseModel("waterfall", 'assets/images/waterfall-100-2.png', Colors.blue,
+          'assets/audios/noiser_waterfall.mp3'),
+    );
+    noises.add(
+      NoiseModel("sea waves", 'assets/images/sun-and-sea-100.png', Colors.blue,
+          'assets/audios/noiser_waves.mp3.mp3'),
+    );
+    noises.add(
+      NoiseModel("night", 'assets/images/moon-and-stars-100.png', Colors.blue,
+          'assets/audios/noiser_night.mp3'),
     );
   }
   @override
@@ -47,9 +62,7 @@ class _SoundsPageState extends State<SoundsPage> {
       appBar: AppBar(
         title: Text("Noiser"),
       ),
-      body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: generateNoisesList(noises)),
+      body: ListView(children: generateNoisesList(noises)),
     );
   }
 }
@@ -62,10 +75,11 @@ List<Widget> generateNoisesList(List<NoiseModel> models) {
   return widgets;
 }
 
-FlatButton generateButton(NoiseModel noiseModel) {
+Widget generateButton(NoiseModel noiseModel) {
   return FlatButton(
     padding: EdgeInsets.all(5.0),
     color: noiseModel.color,
+    child: Image.asset(noiseModel.imagePath),
     onPressed: () {
       print("onpressed");
       noiseModel.player.playOrPause();
@@ -76,8 +90,12 @@ FlatButton generateButton(NoiseModel noiseModel) {
 class NoiseModel {
   AssetsAudioPlayer player;
   Color color;
+  String name;
+  String imagePath;
   String audioUrl;
-  NoiseModel(Color color, String audioUrl) {
+  NoiseModel(String name, String imagePath, Color color, String audioUrl) {
+    this.name = name;
+    this.imagePath = imagePath;
     this.color = color;
     this.audioUrl = audioUrl;
     this.player = AssetsAudioPlayer();
